@@ -8,17 +8,13 @@ import (
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ses"
+
+	"github.com/kelseyhightower/envconfig"
+
+	"github.com/shigeru10/config"
 )
 
 const (
-	// Replace sender@example.com with your "From" address.
-	// This address must be verified with Amazon SES.
-	Sender = "sender@example.com"
-
-	// Replace recipient@example.com with a "To" address. If your account
-	// is still in the sandbox, this address must be verified.
-	Recipient = "recipient@example.com"
-
 	// Specify a configuration set. If you do not want to use a configuration
 	// set, comment out the following constant and the
 	// ConfigurationSetName: aws.String(ConfigurationSet) argument below
@@ -43,6 +39,8 @@ const (
 )
 
 func main() {
+	Sender := &config.Email.Sender
+	Recipient := &config.Email.Recipient
 
 	// Create a new session and specify an AWS Region.
 	sess, err := session.NewSession(&aws.Config{
